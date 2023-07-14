@@ -25,5 +25,7 @@ OUTPUTS=${DATA_PATH}/outputs
 
 $DEBUG rm -r ${OUTPUTS}
 
-jupyter nbconvert --execute --to python intense-qc.ipynb
+# Alternative run command (see Dockerfile)
+#jupyter nbconvert --execute --to python intense_qc.ipynb
+python -u intense_qc.py
 python -u write_output_metadata.py

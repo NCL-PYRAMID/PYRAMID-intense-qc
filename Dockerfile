@@ -18,13 +18,13 @@ ARG APP_HOME=/src
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 ENV PATH /opt/conda/bin:$PATH
 
-# Update apt
+# To stop R installation from asking questions
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update apt installations
 RUN apt update --fix-missing
 RUN apt install wget -y
 RUN apt upgrade -y
-
-# Update R (need some R packages to use intense-qc)
-RUN Rscript -e 'install.packages("trend", repos="https://cloud.r-project.org")'
 
 # Get and install Anaconda
 RUN wget https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh -O ~/anaconda.sh
@@ -47,6 +47,10 @@ COPY environment.yml .
 RUN conda env create -f environment.yml
 SHELL ["conda", "run", "-n", "intense-qc", "--no-capture-output", "/bin/bash", "-c"]
 
+# Update R (need some R packages to use intense-qc)
+RUN apt install r-base -y
+RUN Rscript -e 'install.packages("trend", repos="https://cloud.r-project.org")'
+
 #WORKDIR $APP_HOME/static
 #RUN wget https://github.com/nclwater/intense-qc/archive/refs/tags/v0.2.0.tar.gz
 #RUN gzip -d v0.2.0.tar.gz
@@ -56,12 +60,16 @@ WORKDIR $APP_HOME
 COPY intense_qc.ipynb ./
 COPY write_output_metadata.py ./
 COPY run.sh ./
-#COPY requirements.txt ./
+COPY static ./static
+
+# Produce the Python file from the Notebook. We could run this directly using
+# the --execute flag in run.sh
+RUN jupyter nbconvert --to python intense_qc.ipynb
 
 #RUN python -m pip install --upgrade pip
 #RUN python -m pip install -r requirements.txt
 
 # Entry point
-ENV INTESE_QC_ENV=docker
+ENV INTENSE_QC_ENV=docker
 WORKDIR $APP_HOME
 CMD ["conda", "run", "-n", "intense-qc", "--no-capture-output", "/bin/bash", "run.sh"]
