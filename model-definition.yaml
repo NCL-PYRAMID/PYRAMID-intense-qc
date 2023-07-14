@@ -48,8 +48,7 @@ spec:
 
       - name: READ_MODE
         title: Model reading mode
-        description: >
-        This parameter dictates whether the model should read from the API, or from a pre-prepared testing data set.
+        description: This parameter dictates whether the model should read from the API, or from a pre-prepared testing data set.
         type: boolean
         default: true
         required: false
@@ -58,5 +57,4 @@ spec:
     datasets:
       - name: PYRAMID <dataset> Quality-controlled rainfall gauge data
         type: txt
-        description: >
-        Gauge rainfall data quality-controlled using Intense QC (https://github.com/nclwater/intense-qc)
+        description: Gauge rainfall data quality-controlled using Intense QC (https://github.com/nclwater/intense-qc)
