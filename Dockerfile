@@ -1,7 +1,7 @@
 ###############################################################################
 # Base image - Python 3.9
 ###############################################################################
-FROM python:3.9
+FROM ubuntu:20.04
 
 ###############################################################################
 # Installation variables
@@ -62,6 +62,6 @@ COPY run.sh ./
 #RUN python -m pip install -r requirements.txt
 
 # Entry point
-ENV READ_MET_OFFICE_ENV=docker
+ENV INTESE_QC_ENV=docker
 WORKDIR $APP_HOME
 CMD ["conda", "run", "-n", "intense-qc", "--no-capture-output", "/bin/bash", "run.sh"]
