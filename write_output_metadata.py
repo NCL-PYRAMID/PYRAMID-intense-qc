@@ -14,15 +14,14 @@ import datetime
 # Paths
 ###############################################################################
 # Setup base path
-platform = os.getenv("READ_EXTERNAL_ENV")
+platform = os.getenv("INTENSE_QC_ENV")
 if platform=="docker":
     data_path = os.getenv("DATA_PATH", "/data")
 else:
     data_path = os.getenv("DATA_PATH", "./data")
 
 # INPUT paths
-step_in_path = data_path / pathlib.Path("inputs")
-in_path = data_path / pathlib.Path("stage_one") / pathlib.Path("outputs")
+in_path = data_path / pathlib.Path("inputs")
 
 # OUTPUT paths
 out_path = data_path / pathlib.Path("outputs")
@@ -31,8 +30,8 @@ out_path = data_path / pathlib.Path("outputs")
 ###############################################################################
 # Metadata definition
 ###############################################################################
-app_title = "pyramid-read-external"
-app_description = "Default dataslot test output"
+app_title = "PYRAMID <data> Intense QC Output"
+app_description = "Rainfall data filtered through Intense QC data validation"
 metadata = f"""{{
   "@context": ["metadata-v1"],
   "@type": "dcat:Dataset",
